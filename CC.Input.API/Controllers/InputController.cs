@@ -20,9 +20,20 @@ public class InputController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetAll()
     {
         return Ok(await _repository.RetrieveAllAsync());
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        Logic.Model.Input? input = await _repository.RetrieveAsync(id);
+        if(input == null)
+            return NotFound();
+        else
+            return Ok(input);
     }
 
     [HttpPost]

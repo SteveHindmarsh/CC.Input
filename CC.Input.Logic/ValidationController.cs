@@ -32,7 +32,7 @@
         }
         public void SplitContent(string content)
         {
-            _Lines = content.Split(_LineDelimiter, StringSplitOptions.RemoveEmptyEntries);
+            _Lines = content.Split(_LineDelimiter);//, StringSplitOptions.RemoveEmptyEntries);
             DetermineHeadersInclusion();
         }
 
@@ -84,8 +84,16 @@
                     string fieldName = "MPAN";
                     if (string.IsNullOrWhiteSpace(fields[0]))
                         message += $" {fieldName}: is required.";
-                    else if (!long.TryParse(fields[0], out long field1))
-                        message += $" {fieldName}: cannot be parsed as an integer '{fields[0]}'."; 
+                    else
+                    {
+                        if (long.TryParse(fields[0], out long field1))
+                        {
+                            if (field1 < -9999999999999 | field1 > 9999999999999)
+                                message += $" {fieldName}: '{field1}' is out of range.";
+                        }
+                        else
+                            message += $" {fieldName}: cannot be parsed as an integer '{fields[0]}'.";
+                    }
                 }
                 if (fields.Length > 1)
                 {
@@ -101,8 +109,16 @@
                     string fieldName = "DateOfInstallation";
                     if (string.IsNullOrWhiteSpace(fields[2]))
                         message += $" {fieldName}: is required.";
-                    else if (!DateOnly.TryParseExact(fields[2], _DateFormat, out DateOnly field3))
-                        message += $" {fieldName}: cannot be parsed as a date '{fields[2]}'.";
+                    else
+                    {
+                        if (!DateOnly.TryParseExact(fields[2], _DateFormat, out DateOnly field3))
+                            message += $" {fieldName}: cannot be parsed as a date '{fields[2]}'.";
+                        else
+                        {
+                            if (field3 > DateOnly.FromDateTime(DateTime.Now))
+                                message += $" {fieldName}: {field3.ToString("yyyyMMdd")} is not in the past.";
+                        }
+                    }
                 }
                 if (fields.Length > 3)
                 {

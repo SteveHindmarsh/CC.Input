@@ -42,4 +42,9 @@ public class Repository : IRepository<Model.Input>
     {
        _list.Clear();
     }
+
+    public async Task<Model.Input?> RetrieveAsync(int id)
+    {
+        return _list.SingleOrDefault(i => i.Id == id);
+    }
 }

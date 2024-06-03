@@ -33,6 +33,7 @@ else
     <table class="table">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>MPAN</th>
                 <th>Meter serial</th>
                 <th>Date of installation</th>
@@ -44,6 +45,7 @@ else
             @foreach (var input in inputs)
             {
                 <tr>
+                    <td>@input.Id</td>
                     <td>@input.MPAN</td>
                     <td>@input.MeterSerial</td>
                     <td>@input.DateOfInstallation.ToShortDateString()</td>

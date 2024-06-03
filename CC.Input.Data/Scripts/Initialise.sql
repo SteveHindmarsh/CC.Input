@@ -1,4 +1,5 @@
-﻿USE [CC]
+﻿/****** Can be used to manually create the Input Table, other than that this is not programmatically used. ******/
+USE [CC]
 GO
 
 /****** Object: Table [dbo].[Inputs] Script Date: 03/06/2024 09:41:28 ******/

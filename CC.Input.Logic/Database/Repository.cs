@@ -47,28 +47,25 @@ public class Repository : IRepository<Model.Input>
         return entity.Id;
     }
 
+    //private async Task<int> BulkUploadAsync(string text)
+    //{
+    //    //TODO Investigate optimal import from large file with millions of lines
+    //    using (System.Data.SqlClient.SqlBulkCopy bulkCopy =
+    //    new System.Data.SqlClient.SqlBulkCopy(sqlConnection))
+    //    {
+    //        bulkCopy.DestinationTableName = destinationTableName;
+    //        bulkCopy.BatchSize = 1000; // 1000 rows
+    //        bulkCopy.WriteToServer(dataTable); // May also pass in DataRow[]
+    //    }
+    //}
+
+    public async Task<Model.Input?> RetrieveAsync(int id)
+    {
+        return await _inputDbContext.Inputs.SingleOrDefaultAsync(i => i.Id == id);
+    }
+
     public async Task DeleteAllAsync()
     {
         await _inputDbContext.Inputs.ExecuteDeleteAsync();
     }
-
-    //public async Task<Model.Input?> GetByIdAsync(int id)
-    //{
-    //    return await _inputDbContext.Inputs.FindAsync(id);
-    //}
-
-    //public async Task UpdateAsync(Model.Input entity)
-    //{
-    //    _inputDbContext.Inputs.Update(entity);
-    //    await _inputDbContext.SaveChangesAsync();
-    //}
-
-    //public async Task DeleteAsync(int id)
-    //{
-    //    var entity = await _inputDbContext.Inputs.SingleOrDefaultAsync(e => e.Id == id);
-    //    if (entity != null)
-    //        _inputDbContext.Inputs.Remove(entity);
-
-    //    await _inputDbContext.SaveChangesAsync();
-    //}
 }

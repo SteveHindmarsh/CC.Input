@@ -5,5 +5,6 @@
         Task<IEnumerable<T>> RetrieveAllAsync();
         Task<ValidationResult> UploadAsync(string text, bool commitIfValid);
         Task DeleteAllAsync();
+        Task<T?> RetrieveAsync(int id);
     }
 }
