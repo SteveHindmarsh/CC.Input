@@ -14,7 +14,7 @@
 		Type the following:
 		PM> Update-Database
     That will create the CC DB on the host configured in appsettings.json.
-
+    Also say yes to installing the SSL certificate (You may get 2 prompts).
     Some Test files to upload exist in ..\CC.Input\CC.Input.Logic.Testing.Unit\Data
    
 ## Talking Points  
