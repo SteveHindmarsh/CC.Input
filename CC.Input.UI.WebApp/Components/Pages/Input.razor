@@ -1,0 +1,93 @@
+﻿@page "/input"
+@rendermode InteractiveServer
+@using CC.Input.Logic
+@using CC.Input.Logic.Model
+@using CC.Input.UI.WebApp.Services
+@inject IInputService inputService
+@inject ILogger<Input> logger
+@inject NavigationManager navigationManager
+
+<PageTitle>Input</PageTitle>
+
+<h1>Input</h1>
+
+<div class="alert alert-info">
+    Please select and upload your file, we will report its contents and validity back to you before you confirm it's import...
+</div>
+<p><InputFile OnChange="UploadFile" class="form-control" accept=".txt" /></p>
+<p>
+    <input type="checkbox" @onchange="ToggleIsCommit" /> <text>Import the file contents if the file is valid</text>
+</p>
+@if (fileUploadAttempted)
+{
+    if (fileUploadIsValid)
+    {
+    <div class="alert alert-success">
+        The file uploaded...
+    </div>
+    }
+    else
+    {
+    <div class="alert alert-danger">
+        The file is invalid, only text files with a '.txt' extension are allowed, please select another.
+    </div>
+    }
+}
+@if (validationResult != null)
+{
+    if (validationResult.IsValid)
+    {
+        if (validationResult.IsCommitted)
+        {
+            <div class="alert alert-success">
+                The @validationResult.TotalLines line(s) found within the file are valid and the contents were imported as requested, you can view them <NavLink href="inputs">here</NavLink>.
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                The @validationResult.TotalLines line(s) found within the file are valid, however the file content was <strong>NOT</strong> committed as requested.
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <p>The file has @validationResult.Errors.Count error(s) in @validationResult.TotalLines lines, please correct the following and upload it again...</p>
+            <ol>
+            @foreach (var validationMessage in validationResult.Errors)
+            {
+                <li>@validationMessage</li>
+            }
+            </ol>
+        </div>
+    }
+}
+@code {
+    private ValidationResult? validationResult;
+    private bool isCommit = false;
+    private bool fileUploadAttempted;
+    private bool fileUploadIsValid;
+    private async Task UploadFile(InputFileChangeEventArgs e)
+    {
+        fileUploadAttempted = true;
+        fileUploadIsValid = e.File.Name.EndsWith(".txt");
+
+        if(fileUploadIsValid)
+        {
+            //TODO: How can we check if the file uploaded ok? Also will require custom chunk uploading for massive file
+            await using MemoryStream memoryStream = new MemoryStream();
+            await e.File.OpenReadStream().CopyToAsync(memoryStream);
+            memoryStream.Position = 0;
+
+            validationResult = await inputService.UploadAsync(memoryStream, isCommit);
+
+            if (validationResult.IsValid && validationResult.IsCommitted)
+                logger.LogInformation($"[User] committed a file named '{e.File}'");//TODO: logging helper
+        }
+    }
+    private void ToggleIsCommit()
+    {
+        isCommit = !isCommit;
+    }
+}

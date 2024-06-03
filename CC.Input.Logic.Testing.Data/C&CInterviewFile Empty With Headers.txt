@@ -1,0 +1,1 @@
+﻿MPAN|MeterSerial|DateOfInstallation|AddressLine1|PostCode

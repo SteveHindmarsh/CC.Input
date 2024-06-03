@@ -1,0 +1,52 @@
+﻿@page "/inputs"
+@attribute [StreamRendering]
+@using CC.Input.Logic.Model
+@using CC.Input.UI.WebApp.Services
+@inject IInputService inputService
+@inject ILogger<Input> logger
+
+<PageTitle>Inputs</PageTitle>
+
+<h1>Inputs</h1>
+
+@if (inputs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <p>Page 1 of X pages (@inputs.Count() items).</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>MPAN</th>
+                <th>Meter serial</th>
+                <th>Date of installation</th>
+                <th>Address line 1</th>
+                <th>Postcode</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var input in inputs)
+            {
+                <tr>
+                    <td>@input.MPAN</td>
+                    <td>@input.MeterSerial</td>
+                    <td>@input.DateOfInstallation.ToShortDateString()</td>
+                    <td>@input.AddressLine1</td>
+                    <td>@input.PostCode</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<CC.Input.Logic.Model.Input>? inputs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        inputs = await inputService.RetrieveAsync();
+    }
+}
