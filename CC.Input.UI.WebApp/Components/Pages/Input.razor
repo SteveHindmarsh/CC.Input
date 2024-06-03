@@ -12,12 +12,10 @@
 <h1>Input</h1>
 
 <div class="alert alert-info">
-    Please select and upload your file, we will report its contents and validity back to you before you confirm it's import...
+    Please select your file, we will upload it and report its contents and validity but only import it if you request it below...
 </div>
 <p><InputFile OnChange="UploadFile" class="form-control" accept=".txt" /></p>
-<p>
-    <input type="checkbox" @onchange="ToggleIsCommit" /> <text>Import the file contents if the file is valid</text>
-</p>
+<p><input type="checkbox" @onchange="ToggleIsCommit" /> <text>Import the file contents if the file is valid</text></p>
 @if (fileUploadAttempted)
 {
     if (fileUploadIsValid)

@@ -47,5 +47,12 @@ public class InputController : ControllerBase
 
         return Ok(await _repository.UploadAsync(content,commit));
     }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete()
+    {
+        await _repository.DeleteAllAsync();
+        return Ok();
+    }
 }
 

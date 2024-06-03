@@ -1,5 +1,5 @@
 ﻿@page "/inputs"
-@attribute [StreamRendering]
+@rendermode InteractiveServer
 @using CC.Input.Logic.Model
 @using CC.Input.UI.WebApp.Services
 @inject IInputService inputService
@@ -15,7 +15,20 @@
 }
 else
 {
-    <p>Page 1 of X pages (@inputs.Count() items).</p>
+    if(@inputs.Count() == 0)
+    {
+        <p>No items found.</p>
+    }
+    else
+    {
+    <div class="parent">
+        <div class="child1">
+            <p>Page 1 of X pages (@inputs.Count() items).</p>
+        </div>
+        <div class="child2">
+            <button class="btn btn-primary" @onclick="DeleteAll">Delete all (dev only)</button>
+        </div>
+    </div>
 
     <table class="table">
         <thead>
@@ -40,6 +53,7 @@ else
             }
         </tbody>
     </table>
+    }
 }
 
 @code {
@@ -47,6 +61,18 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await RetrieveAll();
+    }
+
+    private async Task RetrieveAll()
+    {
         inputs = await inputService.RetrieveAsync();
+    }
+
+    private async Task DeleteAll()
+    {
+        inputs = null;
+        await inputService.DeleteAllAsync();
+        await RetrieveAll();
     }
 }

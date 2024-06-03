@@ -9,7 +9,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<IValidationController, ValidationController>();
+//builder.Services.AddScoped<IValidationController, ValidationController>();
 builder.Services.AddScoped<IInputService, InputService>();
 
 var app = builder.Build();

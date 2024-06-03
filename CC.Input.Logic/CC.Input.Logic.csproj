@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CC.Input.Data\CC.Input.Data.csproj" />
     <ProjectReference Include="..\CC.Input.Logic.Model\CC.Input.Logic.Model.csproj" />
   </ItemGroup>
 

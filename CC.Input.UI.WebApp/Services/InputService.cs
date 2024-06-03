@@ -41,4 +41,9 @@ public class InputService : IInputService
         stream.Close();
         return JsonConvert.DeserializeObject<Logic.ValidationResult?>(await response.Content.ReadAsStringAsync());
     }
+
+    public async Task DeleteAllAsync()
+    {
+        await _httpClient.DeleteAsync($"api/input");
+    }
 }

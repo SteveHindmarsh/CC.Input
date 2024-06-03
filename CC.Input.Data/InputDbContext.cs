@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace CC.Input.Data;
 
@@ -18,7 +19,7 @@ public class InputDbContext : DbContext
 ///// </summary>
 //public class DatabaseDesignTimeDbContextFactory
 //: IDesignTimeDbContextFactory<InputDbContext>
-//{ 
+//{
 //    public InputDbContext CreateDbContext(string[] args)
 //    {
 //        var builder = new DbContextOptionsBuilder<InputDbContext>();

@@ -1,4 +1,6 @@
-﻿namespace CC.Input.Logic.Mock;
+﻿using System.Runtime.CompilerServices;
+
+namespace CC.Input.Logic.Mock;
 public class Repository : IRepository<Model.Input>
 {
     private IValidationController _validationController;
@@ -26,7 +28,6 @@ public class Repository : IRepository<Model.Input>
         if(result.IsValid && commitIfValid) 
         {
             IEnumerable<Model.Input> inputs = _validationController.Parse(text);
-            _list.Clear();
             _list.AddRange(inputs);
             result.IsCommitted = true;
             return result;
@@ -35,5 +36,10 @@ public class Repository : IRepository<Model.Input>
         {
             return result;
         }
+    }
+
+    public async Task DeleteAllAsync()
+    {
+       _list.Clear();
     }
 }

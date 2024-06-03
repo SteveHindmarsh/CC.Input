@@ -1,0 +1,10 @@
+﻿.parent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.child1 {
+    text-align: left;
+}
+.child2 {
+    text-align:right;
+}
