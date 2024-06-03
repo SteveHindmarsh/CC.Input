@@ -19,10 +19,10 @@
    
 ## Talking Points  
 1. I have used a C#/SQL long int in place of Numeric(13,0) due to familiarity but would look into why Numeric(13,0) is specified, I believe longint is more optimal at this point?
-2. Mpan MPAN field name conventions in C#?
+2. Mpan MPAN field name conventions in C#? Also other SQL/JS/API naming conventions.
 3. Should we use DB Id column? How unique is MPAN?
 4. Which fields may require indexes and what types of indexes, further use cases?
-5. Model what scope should be used, should we have model mappers for use with Data Transfer Objects (DTO's)?
+5. Object Models what scope should be used, should we have model mappers for use with Data Transfer Objects (DTO's)?
 6. CC.Input.Data currently has a reference to CC.Input.Logic.Model which should ideally not be referenced in that direction. 
 7. Blazor UI & API Exception handling / security /logging?
 8. Validation is seperate from Entity model to make it more useful/portable.
