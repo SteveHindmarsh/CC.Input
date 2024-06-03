@@ -14,6 +14,8 @@
 		Type the following:
 		PM> Update-Database
     That will create the CC DB on the host configured in appsettings.json.
+
+    Some Test files to upload exist in ..\CC.Input\CC.Input.Logic.Testing.Unit\Data
    
 ## Talking Points  
 1. I have used a C#/SQL long int in place of Numeric(13,0) due to familiarity but would look into why Numeric(13,0) is specified, I believe longint is more optimal at this point?
