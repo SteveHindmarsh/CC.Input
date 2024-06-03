@@ -6,11 +6,12 @@ namespace CC.Input.UI.WebApp.Services;
 public class InputService : IInputService
 {
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
 
-    public InputService(HttpClient httpClient)
+    public InputService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient ?? throw new ArgumentNullException();
-        //_settings = settings.Value;//TODO
+        _configuration = configuration ?? throw new ArgumentNullException();
         InitialiseHttpClient();
     }
 
@@ -19,7 +20,7 @@ public class InputService : IInputService
         //TODO
         //httpClient.DefaultRequestHeaders.Add("Authorization", _settings.Token);
         //httpClient.DefaultRequestHeaders.Add("User-Agent", _settings.UserAgent);
-        _httpClient.BaseAddress = new Uri("http://localhost:5079");//TODO: URL setting
+        _httpClient.BaseAddress = new Uri(_configuration.GetValue<string>("CC.Input.API.URL")!);
     }
 
     public async Task<IEnumerable<Logic.Model.Input>?> RetrieveAsync()

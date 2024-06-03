@@ -6,6 +6,7 @@
 @inject IInputService inputService
 @inject ILogger<Input> logger
 @inject NavigationManager navigationManager
+@inject IConfiguration config
 
 <PageTitle>Input</PageTitle>
 
@@ -30,7 +31,13 @@
     else
     {
     <div class="alert alert-danger">
-        The file is invalid, only text files with a '.txt' extension are allowed, please select another.
+            <ul>
+                <li>The file is invalid...</li>
+                @foreach (var error in uploadErrors)
+                {
+                    <li>@error</li>
+                }
+            </ul>    
     </div>
     }
 }
@@ -68,23 +75,49 @@
     private ValidationResult? validationResult;
     private bool isCommit = false;
     private bool fileUploadAttempted;
-    private bool fileUploadIsValid;
+    private bool fileUploadIsValid
+    {
+        get
+        {
+            return uploadErrors.Count == 0;
+        }
+    }
+    private long maxFileSize
+    {
+        get
+        {
+            return config.GetValue<long>("MaxFileSizeInBytes");
+        }
+    }
+    private List<string> uploadErrors = new();
     private async Task UploadFile(InputFileChangeEventArgs e)
     {
+        uploadErrors.Clear();
         fileUploadAttempted = true;
-        fileUploadIsValid = e.File.Name.EndsWith(".txt");
+        if (!e.File.Name.EndsWith(".txt"))
+            uploadErrors.Add("Only text files with a '.txt' extension are allowed, please select another.");
+        if (e.File.Size > maxFileSize)//TODO chunk it!
+            uploadErrors.Add($"File size {e.File.Size} bytes is too big, max file size is {maxFileSize} bytes.");//TODO magnitude label
 
         if(fileUploadIsValid)
         {
-            //TODO: How can we check if the file uploaded ok? Also will require custom chunk uploading for massive file
-            await using MemoryStream memoryStream = new MemoryStream();
-            await e.File.OpenReadStream().CopyToAsync(memoryStream);
-            memoryStream.Position = 0;
+            try
+            {
+                //TODO: How can we check if the file uploaded ok? Also will require custom chunk uploading for massive file
+                await using MemoryStream memoryStream = new MemoryStream();
+                await e.File.OpenReadStream(maxFileSize).CopyToAsync(memoryStream);//TODO maxFileSize / chunks
+                memoryStream.Position = 0;
 
-            validationResult = await inputService.UploadAsync(memoryStream, isCommit);
+                validationResult = await inputService.UploadAsync(memoryStream, isCommit);
 
-            if (validationResult.IsValid && validationResult.IsCommitted)
-                logger.LogInformation($"[User] committed a file named '{e.File}'");//TODO: logging helper
+                if (validationResult.IsValid && validationResult.IsCommitted)
+                    logger.LogInformation($"[User] committed a file named '{e.File}'");//TODO: logging helper
+            }
+            catch(Exception exc)
+            {
+                uploadErrors.Add("Unexpected error occured, try again or contact support.");
+                logger.LogError($"Error during upload: {exc}");
+            }
         }
     }
     private void ToggleIsCommit()
