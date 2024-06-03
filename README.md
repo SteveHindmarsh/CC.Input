@@ -2,7 +2,7 @@
 ## Installation
 	Install Visual Studio 2022 and clone this repository to your local disk.
 	Two browser instances will be running when the solution starts up.
- 	The database is hosted on your local SQLExpress which you can view using Visual Studio 2022 -> View -> SQLServer Object Explorer after it is created with the command below.
+ 	The database can be hosted on your local SQLExpress which you can view using Visual Studio 2022 -> View -> SQLServer Object Explorer after it is created with the command below.
  	Ensure both these projects are configured in Visual Studio 2022 as Multiple Startup Projects, right click the solution and select Configure Startup Projects.
     1. Blazor UI https://localhost:7027/
         PROJECT: CC.Input.UI.WebApp
@@ -16,14 +16,15 @@
     That will create the CC DB on the host configured in appsettings.json.
    
 ## Talking Points  
-1. I have used a C#/SQL long int in place of Numeric(13,0) due to familiarity but would look into why Numeric(13,0) is specified?
-2. Mpan MPAN field name conventions?
-3. Should we use DB Id column?
+1. I have used a C#/SQL long int in place of Numeric(13,0) due to familiarity but would look into why Numeric(13,0) is specified, I believe longint is more optimal at this point?
+2. Mpan MPAN field name conventions in C#?
+3. Should we use DB Id column? How unique is MPAN?
 4. Which fields may require indexes and what types of indexes, further use cases?
 5. Model what scope should be used, should we have model mappers for use with Data Transfer Objects (DTO's)?
 6. CC.Input.Data currently has a reference to CC.Input.Logic.Model which should ideally not be referenced in that direction. 
 7. Blazor UI & API Exception handling / security /logging?
 8. Validation is seperate from Entity model to make it more useful/portable.
+9. The Unit tests demonstrate the seperation of concerns but are not comprehensive.
 
 ## TODO 
 Reasearch 
