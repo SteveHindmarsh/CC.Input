@@ -39,6 +39,10 @@ Ensure both these projects are configured in Visual Studio 2022 as Multiple Star
 9. The Unit tests demonstrate the seperation of concerns but are not comprehensive.
 10. Need to further specify the parameters of the file, max file size, max lines, changeabilty expectation - how is the file prepared?
 11. According to spec, API should, but mine does not, "Retrieve all data from an uploaded file or Retrieve an individual item from within a file" but they do obtain them from the DB, is there a reason to get them from file for API or is the spec incorrectly worded?
+12. What do you think about my code? In particular...
+
+    1. Solution and project namespace convention mirrored with project file placement?
+    2. Seperation of concerns giving rise to concise, small and reusable projects? Are there too many - does this help or hinder?       
 
 ## TODO 
 Reasearch 
