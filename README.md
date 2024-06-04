@@ -42,7 +42,8 @@ Ensure both these projects are configured in Visual Studio 2022 as Multiple Star
 
 ## TODO 
 Reasearch 
-1. Use optimal sql update command from SP for importing from file or something like this perhaps...
+1. Use sql update from a stored procedure for optimal import from either full or segmented file parts.
+2. Or something like this utilising the C# ORM objects created from the file perhaps...
 ```using (System.Data.SqlClient.SqlBulkCopy bulkCopy = 
 new System.Data.SqlClient.SqlBulkCopy(sqlConnection))
 {
@@ -51,5 +52,6 @@ new System.Data.SqlClient.SqlBulkCopy(sqlConnection))
     bulkCopy.WriteToServer(dataTable); // May also pass in DataRow[]
 }
 ```
-2. Upload with chunks in UI & API.
+3. Break the upload stream into data 'chunks' in both the UI & API. The file data is  currently streamed through both the UI & API for optimal in memory only processing, however would storing it as a file at some point be necessary in order to action point 4 below.
+4. Depending on all of the above how should this be transactioned paying particular attention to failure/retry processing.
 
