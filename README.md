@@ -34,7 +34,7 @@ Ensure both these projects are configured in Visual Studio 2022 as Multiple Star
 4. Which fields may require indexes and what types of indexes, further use cases?
 5. Object Models what scope should be used, should we have model mappers for use with Data Transfer Objects (DTO's)?
 6. CC.Input.Data currently has a reference to CC.Input.Logic.Model which should ideally not be referenced in that direction. 
-7. Blazor UI & API Exception handling / security /logging? / UX feedback & buzy indicators
+7. Blazor UI & API Exception handling / security /logging? / UX feedback & buzy indicators (progress bar with callback perhaps, 2 stage process upload/api?)
 8. Validation is seperate from Entity model to make it more useful/portable.
 9. The Unit tests demonstrate the seperation of concerns but are not comprehensive.
 10. Need to further specify the parameters of the file, max file size, max lines, changeabilty expectation - how is the file prepared?
