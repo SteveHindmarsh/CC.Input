@@ -21,7 +21,7 @@ Ensure both these projects are configured in Visual Studio 2022 as Multiple Star
    
    PM> Update-Database
    
-   That will create the CC DB on the host configured in appsettings.json (currently configured for SQLExpress that comes with, and can be viewed via, VS2022).
+   That will create the CC DB on the host configured in appsettings.json (currently configured for your local SQLExpress).
    
    Also say yes to installing the SSL certificate (You may get 2 prompts).
    
