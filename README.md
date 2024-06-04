@@ -1,21 +1,31 @@
 # CC.Input
 ## Installation
-	Install Visual Studio 2022 and clone this repository to your local disk.
-	Two browser instances will be running when the solution starts up.
- 	The database can be hosted on your local SQLExpress which you can view using Visual Studio 2022 -> View -> SQLServer Object Explorer after it is created with the command below.
- 	Ensure both these projects are configured in Visual Studio 2022 as Multiple Startup Projects, right click the solution and select Configure Startup Projects.
-    1. Blazor UI https://localhost:7027/
-        PROJECT: CC.Input.UI.WebApp
-    2. Web API https://localhost:7209/swagger/index.html
-        PROJECT: CC.Input.API
-        DB: CC 
-		Visual Studio 2022 -> Tools -> NuGet Package Manager -> Package Manager Console
-		Select the project 'CC.Input.API' in the project dropdown in the Package Manager Console.
-		Type the following:
-		PM> Update-Database
-    That will create the CC DB on the host configured in appsettings.json.
-    Also say yes to installing the SSL certificate (You may get 2 prompts).
-    Some Test files to upload exist in ..\CC.Input\CC.Input.Logic.Testing.Unit\Data
+Install Visual Studio 2022 and clone this repository to your local disk.
+Two browser instances will be running when the solution starts up.
+The database can be hosted on your local SQLExpress which you can view using Visual Studio 2022 -> View -> SQLServer Object Explorer after it is created with the command below.
+Ensure both these projects are configured in Visual Studio 2022 as Multiple Startup Projects, right click the solution and select Configure Startup Projects.
+1. Blazor UI https://localhost:7027/
+
+   PROJECT: CC.Input.UI.WebApp
+3. Web API https://localhost:7209/swagger/index.html
+
+   PROJECT: CC.Input.API
+   
+   DB: CC
+   
+   Using Visual Studio 2022 -> Tools -> NuGet Package Manager -> Package Manager Console
+   
+   Select the project 'CC.Input.API' in the project dropdown in the Package Manager Console.
+   
+   Type the following:
+   
+   PM> Update-Database
+   
+   That will create the CC DB on the host configured in appsettings.json (currently configured for SQLExpress that comes with, and can be viewed via, VS2022).
+   
+   Also say yes to installing the SSL certificate (You may get 2 prompts).
+   
+   Some Test files to upload exist in ..\CC.Input\CC.Input.Logic.Testing.Unit\Data
    
 ## Talking Points  
 1. I have used a C#/SQL long int in place of Numeric(13,0) due to familiarity but would look into why Numeric(13,0) is specified, I believe longint is more optimal at this point?
@@ -27,16 +37,19 @@
 7. Blazor UI & API Exception handling / security /logging? / UX feedback & buzy indicators
 8. Validation is seperate from Entity model to make it more useful/portable.
 9. The Unit tests demonstrate the seperation of concerns but are not comprehensive.
+10. Need to further specify the parameters of the file, max file size, max lines, changeabilty expectation - how is the file prepared?
+11. According to spec, API should but does not "Retrieve all data from an uploaded file or Retrieve an individual item from within a file" but they do obtain them from the DB, is there a reason to get them from file for API?
 
 ## TODO 
 Reasearch 
-1. Use optimal sql update command from SP for importing from file or something like this perhaps?
-using (System.Data.SqlClient.SqlBulkCopy bulkCopy = 
+1. Use optimal sql update command from SP for importing from file or something like this perhaps...
+```using (System.Data.SqlClient.SqlBulkCopy bulkCopy = 
 new System.Data.SqlClient.SqlBulkCopy(sqlConnection))
 {
     bulkCopy.DestinationTableName = destinationTableName;
     bulkCopy.BatchSize = 1000; // 1000 rows
     bulkCopy.WriteToServer(dataTable); // May also pass in DataRow[]
 }
+```
 2. Upload with chunks in UI.
-3. API should but does not "Retrieve all data from an uploaded file or Retrieve an individual item from within a file" but they do obtain them from the DB, is there a reason to get them from file?
+
