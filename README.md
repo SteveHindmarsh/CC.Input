@@ -56,6 +56,6 @@ new System.Data.SqlClient.SqlBulkCopy(sqlConnection))
     bulkCopy.WriteToServer(dataTable); // May also pass in DataRow[]
 }
 ```
-3. Break the upload stream into data 'chunks' in both the UI & API. The file data is  currently streamed through both the UI & API for optimal in memory only processing, however would storing it as a file at some point be necessary in order to action point 4 below.
-4. Depending on all of the above how should this be transactioned paying particular attention to failure/retry processing.
+3. Break the upload stream into data 'chunks' in both the UI & API. The file data is  currently streamed through both the UI & API for optimal in memory only processing, however would storing it as a file at some point be necessary in order to action point 4 below. Can we use Cloud file storage service and a cloud function instead of the API.
+4. Depending on all of the above how should this be transactioned paying particular attention to failure/retry processing, perhaps use a singleton endpoint with a token issued to query import status, the token generated during the initial payload delivery?
 
