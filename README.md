@@ -38,7 +38,7 @@ Ensure both these projects are configured in Visual Studio 2022 as Multiple Star
 8. Validation is seperate from Entity model to make it more useful/portable.
 9. The Unit tests demonstrate the seperation of concerns but are not comprehensive.
 10. Need to further specify the parameters of the file, max file size, max lines, changeabilty expectation - how is the file prepared?
-11. According to spec, API should but does not "Retrieve all data from an uploaded file or Retrieve an individual item from within a file" but they do obtain them from the DB, is there a reason to get them from file for API?
+11. According to spec, API should, but mine does not, "Retrieve all data from an uploaded file or Retrieve an individual item from within a file" but they do obtain them from the DB, is there a reason to get them from file for API or is the spec incorrectly worded?
 
 ## TODO 
 Reasearch 
