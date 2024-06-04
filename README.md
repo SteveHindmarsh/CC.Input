@@ -51,5 +51,5 @@ new System.Data.SqlClient.SqlBulkCopy(sqlConnection))
     bulkCopy.WriteToServer(dataTable); // May also pass in DataRow[]
 }
 ```
-2. Upload with chunks in UI.
+2. Upload with chunks in UI & API.
 
